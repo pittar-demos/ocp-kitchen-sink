@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: supervisor
+    app.kubernetes.io/component: supervisor
+    app.kubernetes.io/instance: supervisor
+    app.kubernetes.io/name: java
+    app.kubernetes.io/part-of: gameoflife
+    app.openshift.io/runtime: java
+    app.openshift.io/runtime-version: openjdk-11-el7
+  name: supervisor
+  namespace: gameoflife
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: supervisor
+    weight: 100
+  wildcardPolicy: None

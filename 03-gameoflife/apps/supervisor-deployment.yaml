@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"StatefulSet","name":"gol-cluster-kafka"}]'
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: https://github.com/pittar-sandbox/supervisor
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"supervisor:latest","namespace":"gameoflife"},"fieldPath":"spec.template.spec.containers[?(@.name==\"supervisor\")].image","pause":"false"}]'
+  labels:
+    app: supervisor
+    app.kubernetes.io/component: supervisor
+    app.kubernetes.io/instance: supervisor
+    app.kubernetes.io/name: java
+    app.kubernetes.io/part-of: gameoflife
+    app.openshift.io/runtime: java
+    app.openshift.io/runtime-version: openjdk-11-el7
+  name: supervisor
+  namespace: gameoflife
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: supervisor
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: supervisor
+        deploymentconfig: supervisor
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/gameoflife/supervisor:latest
+        imagePullPolicy: Always
+        name: supervisor
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        - containerPort: 8778
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
