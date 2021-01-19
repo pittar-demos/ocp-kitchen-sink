@@ -1,6 +1,6 @@
 # OpenShift 4 - Kitchen Sink Demo
 
-## 1. Platform Overview
+## Platform Overview - The Foundation
 
 ### Helping Overcome Common Challenges
 
@@ -36,12 +36,11 @@
 
 **Tour:** Explore the catalog of languages and runtimes, as well as the built-in OperatorHub interface.
 
-### Demo Time!
+## Demos
 
 #### Get Started
 
 1. Login to your cluster with the OpenShift cli as a `cluster-admin`
-2. Install Argo CD: `00-argocd/setup.sh`
 
 Now, for some rapid-fire demos to highlights a few core features of OpenShift, the advantages they bring, and the benefit they can have for your organization:
 
@@ -121,3 +120,11 @@ This offers a huge benefit in the ability to easily install and manage the Serve
 #### Standard Development Environment Made Easy
 
 Another core component of OpenShift Container Platform is [CodeReady Workspaces](https://developers.redhat.com/products/codeready-workspaces/overview).
+
+*CodeReady Workspaces* gives developers full workspaces that run on your OpenShift cluster, accessed through a modern browser such as Chrome or FireFox.  The UI is the same "Theia" UI developers who use *VS Code* are used to, and it can even use most of the same plugins!
+
+Each workspace can be tailored to suit each individual project.  In fact, the configuration of a workspace is encoded in a `devfile` that is included in your git repositry.  This means that a developer can be up and running on a project in a minute or two, using the same tooling (including tool/runtime versions), commands, and plugins as the rest of the team.
+
+This has obvious benefits over traditional IDEs that run on a desktop that can easily have configuration drift from machine to machine, or bulky VDIs that require a developer to use a full VM to have a standard development environment.
+
+**Demo:** Explore CodeReady Workspaces
